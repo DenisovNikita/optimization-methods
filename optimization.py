@@ -3,6 +3,7 @@ import time
 import numpy as np
 from numpy.linalg import LinAlgError
 import scipy
+from scipy.optimize import line_search as scalar_search_wolf2
 from datetime import datetime
 from collections import defaultdict
 
@@ -13,7 +14,7 @@ class LineSearchTool(object):
 
     method : String containing 'Wolfe', 'Armijo' or 'Constant'
         Method of tuning step-size.
-        Must be be one of the following strings:
+        Must be one of the following strings:
             - 'Wolfe' -- enforce strong Wolfe conditions;
             - 'Armijo" -- adaptive Armijo rule;
             - 'Constant' -- constant step size.
@@ -54,7 +55,7 @@ class LineSearchTool(object):
     def to_dict(self):
         return self.__dict__
 
-    def line_search(self, oracle, x_k, d_k, previous_alpha=None):
+    def line_search(self, oracle, x_k, d_k, previous_alpha=None, display=False):
         """
         Finds the step size alpha for a given starting point x_k
         and for a given search direction d_k that satisfies necessary
@@ -79,7 +80,32 @@ class LineSearchTool(object):
             Chosen step size
         """
         # TODO: Implement line search procedures for Armijo, Wolfe and Constant steps.
-        return 1
+        def phi(a):
+            return oracle.func(x_k + a * d_k)
+
+        def phi_derivative(a):
+            return np.dot(oracle.grad(x_k + a * d_k), d_k)
+
+        def armijo_condition(a):
+            if display:
+                print(f"a = {a}, left = {phi(a)}, right = {phi(0) + self.c1 * a * phi_derivative(0)}")
+            return phi(a) <= phi(0) + self.c1 * a * phi_derivative(0)
+
+        def armijo():
+            a = self.alpha_0 if previous_alpha is None else 2 * previous_alpha
+            while not armijo_condition(a):
+                a /= 2
+            return a
+
+        if self._method == 'Wolfe':
+            a = scalar_search_wolf2(oracle.func, oracle.grad, x_k, d_k, c1=self.c1, c2=self.c2)
+            return armijo() if a is None else a[0]
+        elif self._method == 'Armijo':
+            return armijo()
+        elif self._method == 'Constant':
+            return self.c
+        else:
+            assert False, "Impossible situation"
 
 
 def get_line_search_tool(line_search_options=None):
@@ -164,14 +190,16 @@ def gradient_descent(oracle, x_0, tolerance=1e-5, max_iter=10000,
         x_k = np.copy(x_0)
 
         # TODO: Implement gradient descent
-        a_k = 1
+        a_k = None
         for _ in range(max_iter):
             extend_history(x_k)
             if time_to_stop(x_k):
                 return x_k, 'success', history
             g_k = oracle.grad(x_k)
             d_k = -g_k
-            a_k = line_search_tool.line_search(oracle, x_k, d_k, a_k)
+            a_k = line_search_tool.line_search(oracle, x_k, d_k, previous_alpha=a_k, display=display)
+            if display:
+                print(f"alpha_k = {a_k}")
             x_k = x_k - a_k * d_k
         extend_history(x_k)
         if time_to_stop(x_k):

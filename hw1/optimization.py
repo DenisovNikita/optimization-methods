@@ -189,7 +189,6 @@ def gradient_descent(oracle, x_0, tolerance=1e-5, max_iter=10000,
         line_search_tool = get_line_search_tool(line_search_options)
         x_k = np.copy(x_0)
 
-        # TODO: Implement gradient descent
         a_k = None
         for _ in range(max_iter):
             extend_history(x_k)

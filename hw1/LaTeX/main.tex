@@ -4,6 +4,8 @@
 \usepackage{minimal}
 \usepackage{xcolor}
 \usepackage{listings}
+\usepackage{graphicx}
+\graphicspath{ {./../artifacts/}}
 
 \DeclareMathOperator{\size}{size}
 \DeclareMathOperator{\swap}{swap}
@@ -58,9 +60,127 @@
 \section{Эксперимент: Траектория градиентного спуска на
 квадратичной функции} % 1
 
+Взял 3 квадратичные функции для экспериментов.
+
+\begin{enumerate}
+
+
+\item % 1
+
+$$
+A = 
+\begin{pmatrix}
+1 & 2 \\
+2 & 5
+\end{pmatrix},
+\
+b = 
+\begin{pmatrix}
+0 \\
+0
+\end{pmatrix}
+$$
+
+\item % 2
+
+$$
+A = 
+\begin{pmatrix}
+1 & 1 \\
+1 & 10
+\end{pmatrix},
+\
+b = 
+\begin{pmatrix}
+1 \\
+1
+\end{pmatrix}
+$$
+
+\item % 3
+
+$$
+A = 
+\begin{pmatrix}
+5 & 1 \\
+1 & 5
+\end{pmatrix},
+\
+b = 
+\begin{pmatrix}
+4 \\
+1
+\end{pmatrix}
+$$
+
+\end{enumerate}
+
+Попробовал разные стратегии шага для каждой функции с фиксированной начальной точкой
+
 \begin{enumerate}
 
 \item % 1
+
+$$
+x_0 = 
+\begin{pmatrix}
+10 \\
+1.5
+\end{pmatrix}
+$$
+
+Armijo
+\includegraphics{exp1/strategies/1_armijo.png}
+
+
+Wolfe
+\includegraphics{exp1/strategies/1_wolfe.png}
+
+
+Constant
+\includegraphics{exp1/strategies/1_constant.png}
+
+\item % 2
+
+$$
+x_0 = 
+\begin{pmatrix}
+25 \\
+5.5
+\end{pmatrix}
+$$
+
+Armijo
+\includegraphics{exp1/strategies/2_armijo.png}
+
+
+Wolfe
+\includegraphics{exp1/strategies/2_wolfe.png}
+
+
+Constant
+\includegraphics{exp1/strategies/2_constant.png}
+
+\item % 3
+
+$$
+x_0 = 
+\begin{pmatrix}
+5 \\
+15.5
+\end{pmatrix}
+$$
+
+Armijo
+\includegraphics{exp1/strategies/3_armijo.png}
+
+
+Wolfe
+\includegraphics{exp1/strategies/3_wolfe.png}
+
+
+Constant
+\includegraphics{exp1/strategies/3_constant.png}
 
 \end{enumerate}
 

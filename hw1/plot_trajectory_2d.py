@@ -13,9 +13,9 @@ def plot_levels(func, xrange=None, yrange=None, levels=None):
     >> plot_levels(oracle.func)
     """
     if xrange is None:
-        xrange = [-6, 6]
+        xrange = [-6, 30]
     if yrange is None:
-        yrange = [-5, 5]
+        yrange = [-7.5, 15]
     if levels is None:
         levels = [0, 0.25, 1, 4, 9, 16, 25]
         
@@ -45,7 +45,7 @@ def plot_trajectory(func, history, fit_axis=False, label=None):
     >> plot_trajectory(oracle.func, history['x'])
     """
     x_values, y_values = zip(*history)
-    plt.plot(x_values, y_values, '-v', linewidth=5.0, ms=12.0, 
+    plt.plot(x_values, y_values, '-v', linewidth=1.0, ms=4.0,
              alpha=1.0, c='r', label=label)
     
     # Tries to adapt axis-ranges for the trajectory:
@@ -57,3 +57,6 @@ def plot_trajectory(func, history, fit_axis=False, label=None):
         plt.xlim(xrange)
         plt.ylim(yrange)
 
+
+def show():
+    plt.show()

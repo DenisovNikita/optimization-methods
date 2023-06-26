@@ -199,6 +199,12 @@ def gradient_descent(oracle, x_0, tolerance=1e-5, max_iter=10000,
             a_k = line_search_tool.line_search(oracle, x_k, d_k, previous_alpha=a_k, display=display)
             if display:
                 print(f"alpha_k = {a_k}")
+            if np.any(np.isnan(np.array(a_k).astype(np.float64))):
+                return x_k, 'a_k computational_error', history
+            if np.any(np.isinf(np.array(x_k).astype(np.float64))):
+                return x_k, 'x_k computational_error', history
+            if np.any(np.isinf(np.array(d_k).astype(np.float64))):
+                return x_k, 'd_k computational_error', history
             x_k = x_k + a_k * d_k
         extend_history(x_k)
         if time_to_stop(x_k):

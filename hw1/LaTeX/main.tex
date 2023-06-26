@@ -182,8 +182,84 @@ Wolfe
 Constant
 \includegraphics{exp1/strategies/3_constant.png}
 
+
 \end{enumerate}
 
-\section{next} % 2
+
+Далее взял вторую функцию и несколько различных начальных точек
+
+\begin{enumerate}
+
+\item % 1
+
+$$
+x_0 = 
+\begin{pmatrix}
+25 \\
+5.5
+\end{pmatrix}
+$$
+
+Armijo
+\includegraphics{exp1/x_0/1_armijo.png}
+
+
+Wolfe
+\includegraphics{exp1/x_0/1_wolfe.png}
+
+
+Constant
+\includegraphics{exp1/x_0/1_constant.png}
+
+\item % 2
+
+$$
+x_0 = 
+\begin{pmatrix}
+5 \\
+5
+\end{pmatrix}
+$$
+
+Armijo
+\includegraphics{exp1/x_0/2_armijo.png}
+
+
+Wolfe
+\includegraphics{exp1/x_0/2_wolfe.png}
+
+
+Constant
+\includegraphics{exp1/x_0/2_constant.png}
+
+\item % 3
+
+$$
+x_0 = 
+\begin{pmatrix}
+25 \\
+-3
+\end{pmatrix}
+$$
+
+Armijo
+\includegraphics{exp1/x_0/3_armijo.png}
+
+
+Wolfe
+\includegraphics{exp1/x_0/3_wolfe.png}
+
+
+Constant
+\includegraphics{exp1/x_0/3_constant.png}
+
+
+\end{enumerate}
+
+Вывод по этому эксперименту:
+
+Поведение метода градиентного спуска действительно отличается в зависимости от метода и от начальной точки для разных начальных функций.  Так, для константной стратегии при небольшом шаге происходит больше итераций для сходимости, чем для Армихо и Вульфа. При этом линия сходимости получается плавная по линиям уровня. Армихо шагает быстрее, но перепрыгивает и колеблется вокруг линии (проходящей так, что линии уровня разбиваются симметрично). Вульф сходится еще быстрее Армихо (так как хорош для квадратичных функций). Начальная точка в основном влияет на скорость сходимости: чем ближе она расположена к оптимуму и чем удачнее попадется на линии уровня, тем быстрее сойдется.
+
+\section{Эксперимент: Зависимость числа итераций градиентного спуска от числа обусловленности и размерности пространства} % 2
 
 \end{document}
